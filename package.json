@@ -2,6 +2,10 @@
   "name": "nodejs-template",
   "description": "Node js template",
   "private": true,
+  "version": "master-SNAPSHOT",
+  "publishConfig":{
+    "registry":"http://my-internal-registry.local"
+  },
   "dependencies": {
     "xunit-file": "0.0.6",
     "express": "3.2.5",

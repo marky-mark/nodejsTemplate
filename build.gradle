@@ -39,3 +39,7 @@ task test(type: NodeTask) {
     script = file("${projectDir}/node_modules/mocha/bin/_mocha")
     args = ["${projectDir}/test/*", "--reporters xunit"]
 }
+
+task publish(type: NpmTask) {
+    npmCommand = "publish"
+}
