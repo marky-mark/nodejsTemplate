@@ -1,0 +1,12 @@
+.gradle
+node_modules
+.idea
+*.iml
+*.ipr
+*.iws
+atlassian-ide-plugin.xml
+.DS_Store
+build
+out
+config/runtime.json
+log
