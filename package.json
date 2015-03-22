@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-template",
+  "description": "Node js template",
+  "private": true,
+  "dependencies": {
+    "xunit-file": "0.0.6",
+    "express": "3.2.5",
+    "express-validator": "0.3.2",
+    "config": "0.4.24",
+    "async": "0.2.8",
+    "underscore": "1.4.4",
+    "winston":"0.7.1",
+    "moment": "2.0.0",
+    "request":"2.21.0"
+  },
+  "devDependencies": {
+    "sandboxed-module": "0.2.0",
+    "mocha": "1.10.0",
+    "should": "1.2.2",
+    "supertest": "0.6.0"
+  }
+}

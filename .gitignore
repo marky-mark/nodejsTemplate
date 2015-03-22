@@ -10,3 +10,4 @@ build
 out
 config/runtime.json
 log
+*.log
