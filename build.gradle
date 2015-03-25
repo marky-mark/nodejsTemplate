@@ -44,7 +44,7 @@ task test(type: NpmTask, dependsOn: createBuildDir) {
     npmCommand = "test"
 }
 
-build.dependsOn test
+build.dependsOn npmInstall, test
 
 task publish(type: NpmTask) {
     npmCommand = "publish"

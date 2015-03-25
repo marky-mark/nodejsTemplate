@@ -9,6 +9,7 @@
     "test" : "XUNIT_FILE=build/unit-test-result.xml node_modules/mocha/bin/_mocha test/* -R xunit-file"
   },
   "dependencies": {
+    "51degrees": "1.5.2",
     "xunit-file": "0.0.6",
     "express": "3.2.5",
     "express-validator": "0.3.2",
