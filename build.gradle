@@ -1,6 +1,5 @@
-repositories {
-    mavenCentral()
-}
+import com.moowork.gradle.node.task.NpmSetupTask
+import com.moowork.gradle.node.task.NpmTask
 
 task wrapper(type: Wrapper) {
     gradleVersion = 2.3
@@ -8,12 +7,10 @@ task wrapper(type: Wrapper) {
 
 buildscript {
     repositories {
-        jcenter()
-        // If you want to use a SNAPSHOT build, add the OJO repository:
-//        maven {
-//            name 'JFrog OSS snapshot repo'
-//            url  'https://oss.jfrog.org/oss-snapshot-local/'
-//        }
+        maven {
+            url mavenRepoUrl
+            jcenter()
+        }
     }
     dependencies {
         classpath 'com.moowork.gradle:gradle-node-plugin:0.9'
@@ -27,8 +24,7 @@ node {
     version = '0.12.0'
     npmVersion = '2.1.5'
 
-    // Base URL for fetching node distributions (change if you have a mirror).
-    distBaseUrl = 'http://nodejs.org/dist'
+    distBaseUrl = mavenRepoUrl
 
     // If true, it will download node using above parameters.
     // If false, it will try to use globally installed node.
@@ -44,8 +40,37 @@ task test(type: NpmTask, dependsOn: createBuildDir) {
     npmCommand = "test"
 }
 
+import javax.xml.bind.DatatypeConverter;
+
+npmSetup.doFirst {
+    File file = new File(System.getProperty("user.home") + '/.npmrc')
+    
+    if (!file.exists()) {
+        file.append("registry=" + npmRepoUrl)
+        file.append("\n")
+        String credentials = mavenRepoDeployUsername + ':' + mavenRepoDeployPassword
+        file.append("email=admin@deviceatlascloud.com\n")
+        file.append("_auth=" + DatatypeConverter.printBase64Binary(credentials.getBytes()))
+        file.append("\n")
+        file.append("init.author.name=afilias deviceatlas\n")
+        file.append("init.author.email=admin@deviceatlascloud.com\n")
+        file.append("init.author.url=https://deviceatlas.com/\n")
+    }
+}
+
+cleanNpmSetup << {
+    File file = new File(System.getProperty("user.home") + '/.npmrc')
+
+    if (file.exists())
+        file.delete();
+}
+
 build.dependsOn npmInstall, test
 
-task publish(type: NpmTask) {
-    npmCommand = "publish"
+task npmPublish(type: NpmTask, dependsOn: npmSetup) {
+    args = ['publish', '--registry', npmReleaseUrl]
+}
+
+task npmCacheClean(type: NpmTask) {
+    args = ['cache', 'clean ']
 }

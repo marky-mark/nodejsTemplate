@@ -1,10 +1,8 @@
 {
   "name": "nodejs-template",
+  "version": "0.0.4",
   "description": "Node js template",
-  "private": true,
-  "publishConfig":{
-    "registry":"http://my-internal-registry.local"
-  },
+  "main" : "index.js",
   "scripts": {
     "test" : "XUNIT_FILE=build/unit-test-result.xml node_modules/mocha/bin/_mocha test/* -R xunit-file"
   },
