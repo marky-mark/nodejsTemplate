@@ -1,5 +1,6 @@
-import com.moowork.gradle.node.task.NpmSetupTask
 import com.moowork.gradle.node.task.NpmTask
+import groovy.json.JsonSlurper
+import javax.xml.bind.DatatypeConverter;
 
 task wrapper(type: Wrapper) {
     gradleVersion = 2.3
@@ -21,8 +22,10 @@ apply plugin:'base'
 apply plugin: 'com.moowork.node'
 
 node {
-    version = '0.12.0'
-    npmVersion = '2.1.5'
+    def nodeConfig = new JsonSlurper().parse(project.file('package.json').newReader())
+
+    version = nodeConfig.engines.node
+    npmVersion = nodeConfig.engines.npm
 
     distBaseUrl = mavenRepoUrl
 
@@ -39,8 +42,6 @@ task createBuildDir << {
 task test(type: NpmTask, dependsOn: createBuildDir) {
     npmCommand = "test"
 }
-
-import javax.xml.bind.DatatypeConverter;
 
 npmSetup.doFirst {
     File file = new File(System.getProperty("user.home") + '/.npmrc')
@@ -69,8 +70,4 @@ build.dependsOn npmInstall, test
 
 task npmPublish(type: NpmTask, dependsOn: npmSetup) {
     args = ['publish', '--registry', npmReleaseUrl]
-}
-
-task npmCacheClean(type: NpmTask) {
-    args = ['cache', 'clean ']
 }
