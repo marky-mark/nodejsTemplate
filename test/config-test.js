@@ -12,6 +12,9 @@ describe('UNIT TEST / Foo / ', function () {
             should.equal(config.foo, 'bar');
             config.foo = 'foo';
             should.equal(config.foo, 'foo');
+
+            config.doSomething();
+            config.extraSomething();
         });
 
         it('should test Test', function () {
