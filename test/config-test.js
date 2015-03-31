@@ -1,6 +1,6 @@
 var should = require('should'),
     toTest = require('../src/config.js').Config,
-    toTest2 = require('../src/test.js');
+    toTest2 = require('../src/Test.js');
 
 describe('UNIT TEST / Foo / ', function () {
 
