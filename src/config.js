@@ -10,4 +10,16 @@ Config.prototype.extraSomething = function () {
     console.log('extra something');
 };
 
+var square = function(width) {
+    return {
+        width: width,
+        area: function() {
+            return width * width;
+        }
+    };
+
+}
+
+exports.square = square;
+
 exports.Config = Config;
